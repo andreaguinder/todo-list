@@ -1,0 +1,24 @@
+h1, h2 {
+    text-align: center;
+}
+
+#contenido {
+    margin-top: 40px;
+}
+.borrar-tarea,
+.borrar-tarea:hover {
+    float: right;
+    cursor: pointer;
+    color: red;
+    font-weight: bold;
+}
+
+.error {
+    background-color: red;
+    text-align: center;
+    padding: 5px;
+    max-width: 400px;
+    margin: 0 auto;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+}
