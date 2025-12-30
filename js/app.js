@@ -1,51 +1,36 @@
-// Variables
 const listaTareas = document.querySelector('#lista-tareas');
+const listaCompletadas = document.querySelector('#tareas-check');
 const formulario = document.querySelector('#formulario');
 let tareas = [];
 
-// Event Listeners
 eventListeners();
 
 function eventListeners() {
-     //Cuando se envia el formulario
      formulario.addEventListener('submit', agregarTarea);
 
-     // Borrar Tareas
-     listaTareas.addEventListener('click', borrarTarea);
-
-     // Contenido cargado
      document.addEventListener('DOMContentLoaded', () => {
-          tareas = JSON.parse( localStorage.getItem('tareas') ) || []  ;
-          console.log(tareas);
+          tareas = JSON.parse( localStorage.getItem('tareas') ) || [];
           crearHTML();
      });
 }
 
-// Añadir tarea del formulario
 function agregarTarea(e) {
      e.preventDefault();
-     // leer el valor del textarea
      const tarea = document.querySelector('#tarea').value;
      
-     // validación
      if(tarea === '') {
           mostrarError('Una tarea no puede estar vacía');
           return;
      }
 
-     // Crear un objeto Tarea
      const tareaObj = {
           id: Date.now(),
-          texto: tarea
+          texto: tarea,
+          completada: false
      }
 
-     // Añadirlo a mis tareas
      tareas = [...tareas, tareaObj];
-     
-     // Una vez agregado, mandamos renderizar nuestro HTML
      crearHTML();
-
-     // Reiniciar el formulario
      formulario.reset();
 }
 
@@ -54,8 +39,8 @@ function mostrarError(error) {
      mensajeEerror.textContent = error;
      mensajeEerror.classList.add('error');
 
-     const contenido = document.querySelector('#contenido');
-     contenido.appendChild(mensajeEerror);
+     const contenedorForm = document.querySelector('.tareas');
+     contenedorForm.appendChild(mensajeEerror);
 
      setTimeout(() => {
           mensajeEerror.remove();
@@ -67,49 +52,78 @@ function crearHTML() {
      
      if(tareas.length > 0 ) {
           tareas.forEach( tarea =>  {
-               // crear boton de eliminar
-               const botonBorrar = document.createElement('a');
-               botonBorrar.classList = 'borrar-tarea';
-               botonBorrar.innerText = 'X';
-     
-               // Crear elemento y añadirle el contenido a la lista
+               // 1. Crear elementos base
                const li = document.createElement('li');
-
-               // Añade el texto
                li.innerText = tarea.texto;
 
-               // añade el botón de borrar al tarea
-               li.appendChild(botonBorrar);
+               const hr = document.createElement('hr');
+               hr.classList.add('hr-divisor'); // Inyectamos la clase acá
 
-               // añade un atributo único...
-               li.dataset.tareaId = tarea.id;
+               // 2. Crear botón borrar (común a ambos)
+               const botonBorrar = document.createElement('a');
+               botonBorrar.classList = 'borrar-tarea';
+               botonBorrar.innerHTML = `<i class="fa-solid fa-xmark"></i>`;
+               botonBorrar.onclick = (e) => {
+                    e.stopPropagation();
+                    borrarTarea(tarea.id);
+               };
 
-               // añade el tarea a la lista
-               listaTareas.appendChild(li);
+               // 3. Lógica según estado
+               if(tarea.completada) {
+                    li.classList.add('tarea-completada');
+                    li.style.textDecoration = "line-through";
+                    li.appendChild(botonBorrar);
+                    
+                    listaCompletadas.appendChild(li);
+                    listaCompletadas.appendChild(hr); // Se inyecta con la clase
+               } else {
+                    const botonCheck = document.createElement('a');
+                    botonCheck.classList = 'check-tarea';
+                    botonCheck.innerHTML = `<i class="fa-solid fa-check"></i>`;
+                    botonCheck.style.color = "green";
+                    botonCheck.style.cursor = "pointer";
+                    botonCheck.style.marginRight = "10px";
+                    
+                    botonCheck.onclick = (e) => {
+                         e.stopPropagation();
+                         completarTarea(tarea.id);
+                    };
+
+                    li.appendChild(botonCheck);
+                    li.appendChild(botonBorrar);
+                    
+                    listaTareas.appendChild(li);
+                    listaTareas.appendChild(hr); // Se inyecta con la clase
+               }
           });
      }
-
      sincronizarStorage();
 }
 
-// Elimina el Tarea del DOM
-function borrarTarea(e) {
-     e.preventDefault();
-
-     // console.log(e.target.parentElement.dataset.tareaId);
-     const id = e.target.parentElement.dataset.tareaId;
-     tareas = tareas.filter( tarea => tarea.id != id  );
+function completarTarea(id) {
+     tareas = tareas.map( tarea => {
+          if(tarea.id === id) {
+               return { ...tarea, completada: true }
+          }
+          return tarea;
+     });
      crearHTML();
 }
 
-// Agrega tarea a local storage
+function borrarTarea(id) {
+     tareas = tareas.filter( tarea => tarea.id !== id );
+     crearHTML();
+}
+
 function sincronizarStorage() {
      localStorage.setItem('tareas', JSON.stringify(tareas));
 }
 
-// Elimina los cursos del carrito en el DOM
 function limpiarHTML() {
      while(listaTareas.firstChild) {
           listaTareas.removeChild(listaTareas.firstChild);
+     }
+     while(listaCompletadas.firstChild) {
+          listaCompletadas.removeChild(listaCompletadas.firstChild);
      }
 }

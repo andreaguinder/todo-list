@@ -1,10 +1,57 @@
+body{
+    background-color: #fffbf5;
+    font-family: "Roboto", sans-serif;
+    margin: 0px;
+}
+
 h1, h2 {
     text-align: center;
 }
 
-#contenido {
-    margin-top: 40px;
+h1{
+    text-decoration: underline;
+    text-underline-offset: 10px;
+    text-decoration-color: orange;
 }
+
+#contenido {
+    margin-top: 50px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 70px;
+    gap: 30px;
+}
+
+.container div {
+    width: 320px;
+    padding: 0px 20px;
+}
+
+.tareas,
+.formulario {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.titulo {
+    font-size: 24px;
+text-align: center;
+padding: 0px !important;
+    color: black;
+    font-weight: bold;
+}
+
+.titulo-lista {
+    margin-bottom: 30px;
+}
+
 .borrar-tarea,
 .borrar-tarea:hover {
     float: right;
@@ -13,12 +60,80 @@ h1, h2 {
     font-weight: bold;
 }
 
+.fa-solid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 25px;
+}
+
+.fa-check {
+    float: right;
+    color: green;
+    width: 50px;
+}
+
+.u-full-width {
+    width: 330px;
+    background-color: white;
+    color: black;
+    font-size: 20px;
+    border: 3px solid orange;
+}
+
+ul li {
+    font-size: 20px;
+}
+
+ul {
+    padding-left: 0px;
+}
+
+li {
+    list-style-position: inside;
+}
+li::marker {
+color: orange;
+font-size: 40px;
+}
+
+.button-primary {
+    background-color: orange;
+    color: white;
+    font-weight: bold;
+    width: 340px;
+    padding: 10px;
+    border-color: transparent;
+    border-radius: 8px;
+
+}
+
 .error {
     background-color: red;
     text-align: center;
-    padding: 5px;
-    max-width: 400px;
+    padding: 10px;
+    width: 320px;
     margin: 0 auto;
     color: white;
-    font-family: 'Roboto', sans-serif;
+        border-color: transparent;
+    border-radius: 8px;
+}
+
+.hr-divisor {
+    width: 300px;
+    height: 1px;
+    background-color: orange;
+}
+@media only screen and (max-width:768px) {
+
+
+    .container {
+    flex-direction: column;
+    gap: 50px;
+}
+
+.error{
+    margin: 0px;
+}
 }

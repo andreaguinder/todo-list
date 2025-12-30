@@ -1,41 +1,48 @@
 <!DOCTYPE html>
 <html lang="es-AR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>ToDo List</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/skeleton.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto:wght@300;400&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="css/custom.css">
 </head>
+
 <body>
 
     <div id="contenido">
+        <h1>Lista de Tareas</h1>
         <div class="container">
 
-            <h1>Lista de Tareas</h1>
-            <div class="row">
-                <div class="six columns">
-                    <label for="tarea">Tareas:</label>
-                    <form  id="formulario">
-                            <label for="tarea"></label>
-                            <textarea id="tarea" class="u-full-width"></textarea>
-                            <input type="submit" class="button u-full-width button-primary" value="Agregar Tarea">
-                    </form>
-                </div>
-                <div class="six columns">
-                    <h3>Mis Tareas</h3>
-                    <div id="lista-tareas"></div>
-                </div>
-            </div>
 
+            <div class="tareas">
+                <label for="tarea" class="titulo">Tarea nueva</label>
+                <form id="formulario" class="formulario">
+                    <label for="tarea"></label>
+                    <textarea id="tarea" class="u-full-width"></textarea>
+                    <input type="submit" class="button button-primary" value="AGREGAR TAREA">
+                </form>
+            </div>
+            <div class="tareas-pendientes">
+                <div class="titulo titulo-lista">Tareas pedientes</div>
+                <ul id="lista-tareas"></ul>
+            </div>
+            <div class="tareas-completadas">
+                <div class="titulo titulo-lista">Tareas completadas</div>
+                <ul id="tareas-check"></ul>
+            </div>
         </div>
-    </div> <!--#contenido-->
+
+    </div>
+
 
     <script src="js/app.js"></script>
 </body>
+
 </html>
